@@ -1,0 +1,110 @@
+<!-- form-profile.html buyForm-->
+<div class="form-group" id="addr" ng-class="{ 'has-error': buyForm.address.$invalid }">
+    <label for="address">Address <span class="req">*</span></label>
+    <input
+            ng-class="{'formBuyError' : buyForm.address.$invalid && buyForm.address.$dirty };"
+            ng-blur="notyf(buyForm.address.$error, 'Address')"
+            id="address"
+            type="text"
+            name="address"
+            ng-model="submitData.address"
+            ng-minlength="3"
+            ng-maxlength="30"
+            class="form-control"
+            required>
+
+    <div ng-messages="buyForm.address.$error" ng-show="buyForm.address.$dirty" class="my-messages">
+        <p ng-message="minlength" class="help-block">Your name is too short.</p>
+        <p ng-message="maxlength" class="help-block">Your name is too long.</p>
+        <p ng-message="required" class="help-block">Your name is required.</p>
+    </div>
+    <!--<pre>-->
+        <!--{{buyForm.address.$error}}-->
+        <!--{{buyForm.address.$dirty}}-->
+    <!--</pre>-->
+</div>
+<table class="cityzip">
+    <tr>
+        <td>
+            <div class="form-group city" id="citydiv">
+                <label for="city">City <span class="req">*</span></label>
+
+                <input ng-class="{'formBuyError' : buyForm.city.$invalid && buyForm.city.$dirty };"
+                       ng-blur="notyf(buyForm.city.$error, 'City')"
+                       type="text"
+                       class="form-control"
+                       id="city"
+                       name="city"
+                       ng-model="submitData.city"
+                       required>
+                <!--<div ng-messages="buyForm.city.$error" ng-show="buyForm.city.$dirty" class="my-messages">-->
+                <!--<p ng-message="minlength" class="help-block">Your name is too short.</p>-->
+                <!--<p ng-message="maxlength" class="help-block">Your name is too long.</p>-->
+                <!--<p ng-message="required" class="help-block">Your name is required.</p>-->
+                <!--</div>-->
+                <div noty-container></div>
+            </div>
+
+        </td>
+        <td>
+            <div class="form-group zipcode" id="zip">
+                <label for="zipcode">ZipCode <span class="req">*</span></label>
+                <input ng-class="{ 'formBuyError' : buyForm.zipcode.$invalid && buyForm.zipcode.$dirty };"
+                       ng-blur="notyf(buyForm.zipcode.$error, 'Zip Code')"
+                       type="number"
+                       class="form-control"
+                       id="zipcode"
+                       name="zipcode"
+                       ng-model="submitData.zipcode"
+                       required>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <div ng-messages="buyForm.city.$error" ng-show="buyForm.city.$dirty" class="my-messages">
+                <p ng-message="required" class="help-block">Your name is required.</p>
+            </div>
+        </td>
+        <td>
+            <div ng-messages="buyForm.zipcode.$error" ng-show="buyForm.zipcode.$dirty" class="my-messages">
+                <p ng-message="required" class="help-block">Your name is required.</p>
+            </div>
+        </td>
+    </tr>
+
+
+</table>
+
+
+
+<div class="form-group" id="phoneCell">
+    <label for="phone">Telephone <span class="req">*</span></label>
+    <input ng-class="{'formBuyError' : buyForm.phone.$invalid && buyForm.phone.$dirty };"
+           ng-blur="notyf(buyForm.phone.$error, 'Phone number')"
+           type="text"
+           class="form-control"
+           id="phone" name="phone"
+           ng-model="submitData.phone"
+           ng-minlength="3"
+           ng-maxlength="30"
+           required
+           mask="999-9999-999">
+
+    <div ng-messages="buyForm.phone.$error" ng-show="buyForm.phone.$dirty" class="my-messages">
+        <p ng-message="minlength" class="help-block">Your name is too short.</p>
+
+        <p ng-message="maxlength" class="help-block">Your name is too long.</p>
+
+        <p ng-message="required" class="help-block">Your name is required.</p>
+    </div>
+</div>
+
+
+<div class="form-group row">
+    <div class="col-xs-12 next-section">
+        <button type="button" ui-sref="form.payment" class="btn btn-default loginsbm" ng-disabled="buyForm.$invalid" ng-click="saveFormData()">
+            Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span>
+        </button>
+    </div>
+</div>

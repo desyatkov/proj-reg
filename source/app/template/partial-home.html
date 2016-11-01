@@ -1,0 +1,79 @@
+<div class="row">
+    <div class="col-md-3 col-md-offset-1">
+        <div class="menu">
+            <ul ng-repeat="item in items" class="sideMenuAnim">
+                <!--<a ui-sref="home.albumDetail({ albumID: album.album_id })">-->
+                <li ng-click="hideMe(item)"><a ui-sref="home.albumCategory({ albumCategory: item.name })">{{item.name}}</a><i ng-class="{ 'fa fa-sort-desc': item.subitems.length > 0 }" ></i></li>
+                <ul ng-show="item.hide" >
+                    <li class="subganres" ng-repeat="subitem in item.subitems">
+                        <a ui-sref="home.albumSubCategory({ albumCategory: item.name, subCategory: subitem.name,  })">{{subitem.name}}</a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+
+        <p  ng-repeat="album in albums.data ">
+            {{ album.album_name }}
+        </p>
+
+
+        <div ng-show="isAuth">
+            <div class="row cart-side">
+                <div class="page-header">My Cart
+                    <span class="badge pull-right" ng-show="cartList.length!=0">{{ summedPrice | currency }}</span>
+                </div>
+
+                <ul class="list-group">
+                    <li class="list-group-item" ng-repeat="item in cartList track by $index">
+
+                        <a ng-if="!item.category" ui-sref="home.albumDetail({ albumID: item.album_id, albumCategory: item.subcategory })" >
+                            <div class="img-cart"><img ng-src="source/assets/img/{{ item.getAlbumImage }}" alt=""></div>
+                            <div class="name-cart"><span class="name-cart-sp">{{item.album_name}}</span></div>
+                        </a>
+
+                        <a ng-if="item.category" ui-sref="home.albumSubDetail({ albumID: item.album_id, albumCategory: item.category, subCategory:item.subcategory })" >
+                            <div class="img-cart"><img ng-src="source/assets/img/{{ item.getAlbumImage }}" alt=""></div>
+                            <div class="name-cart"><span class="name-cart-sp">{{item.album_name}}</span></div>
+                        </a>
+
+                        <a href="" ng-click="removeFromCart(item)"> <i class="fa fa-trash"></i></a>
+                        <span class="countincart"><i class="fa fa-times"></i> {{item.countInStock}} qty.</span>
+                    </li>
+                </ul>
+                <div class="page-footer emtpy-cart" ng-show="cartList.length==0">Cart is empty</div>
+                <div class="page-footer"><button ui-sref="cartDetails" type="button" class="btn btn-primary btn-sm" ng-show="cartList.length>0">Go to Cart...</button></div>
+
+            </div>
+        </div>
+
+        <div ng-show="!isAuth">
+            <div ng-repeat="album in albums | limitTo:2 | orderBy:album_release_year">
+                <div>
+                    <a ng-if="album.category" ui-sref="home.albumSubDetail({ albumID: album.album_id, albumCategory: album.category, subCategory:album.subcategory })" >
+                        <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt="">
+                    </a>
+
+                    <a ng-if="!album.category" ui-sref="home.albumDetail({ albumID: album.album_id, albumCategory: album.subcategory })" >
+                        <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt="">
+                    </a>
+                </div>
+                <div class="box-new-album">
+                    <p class="box-new-album-name">{{album.album_name}}</p>
+                    <p class="box-new-album-desc">{{album.album_description}}</p>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+
+    <div class="col-md-7">
+        <div ui-view></div>
+    </div>
+
+</div>
+

@@ -1,0 +1,45 @@
+<div ng-class="{ 'spinner-load': loader }">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+<div class="albumdetail-wripper " ng-class="{ 'hidden': loader }">
+
+
+    <div class=" cover-img-list">
+        <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt="">
+    </div>
+    <div class="album-desc">
+        <p class="name">{{album.album_name}} <span class="year">({{album.album_release_year}})</span></p>
+        <p class="artist"><i class="fa fa-microphone"></i> {{album.album_artist}}</p>
+        <p>Availability: <span ng-class="album.album_stock ? 'instock' : 'outstock'" ng-bind="instock(album.album_stock)"> </span></p>
+        <p class="price"> {{album.album_price | currency}}</p>
+        <p><i class="fa fa-bookmark-o"></i> {{album.album_description}}</p>
+        <p><i class="fa fa-clock-o"></i> {{album.album_duration}}</p>
+    </div>
+    <div>
+        <p><strong><i class="fa fa-pencil-square-o"></i> Editors' Notes:</strong> {{album.album_long_description}}</p>
+        <!--<p>album_stock: {{album.album_stock}}</p>-->
+    </div>
+    <div class="col-md-2 spin_wrap spin_wrap_btn">
+        <button type="button"
+                class="btn btn-success "
+                ng-disabled="!album.album_stock || alreadyInStock"
+                ng-click="addToCard(album)">
+            <span ng-show="!alreadyInStock && album.album_stock"><i class="fa fa-shopping-cart"> </i> Add to Cart</span>
+            <span ng-show="alreadyInStock  && album.album_stock"><i class="fa fa-shopping-cart"> </i> In Cart</span>
+            <span ng-show="!album.album_stock"><i class="fa fa-meh-o"> </i> Out of stock</span>
+        </button>
+    </div>
+    <div class="col-md-1">
+        <spinner></spinner>
+        <div class="col-md-5">
+            <span class="label label-warning">{{addErrMassage}}</span>
+        </div>
+    </div>
+    <div class="wish-list col-md-1">
+        <i class="fa fa-heart passive" ng-click="addToWishList( album )" ng-hide="alreadyInWish"></i>
+        <i class="fa fa-heart" ng-hide="!alreadyInWish" ng-click="removeFromWishList( album )"></i>
+    </div>
+    <div noty-container></div>
+</div>

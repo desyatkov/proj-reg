@@ -1,0 +1,102 @@
+#address{
+  width: 100% !important;
+  box-sizing: border-box;
+  height: 45px;
+}
+.city, .zipcode{
+  width: 100%;
+}
+
+select.customselect{
+  height: 45px;
+  width: 90%;
+  border: none;
+  -webkit-appearance: none;
+  -webkit-border-radius: 0px;
+}
+
+.exp{
+  margin-top: 15px;
+}
+#city, #zipcode, #cardnum{
+  margin: 0;
+  height: 45px;
+  box-sizing: border-box;
+  width: 100% !important;
+}
+
+#citydiv,#citydiv2, #zip, #zip2, #secret{
+  margin-bottom: 0 !important;
+}
+
+#city{
+  width: 95% !important;
+}
+
+.zipcode label{
+  margin-left: 2px;
+}
+
+td {
+  border-spacing: 2px;
+}
+
+.zipcode{
+  //margin-left: 15px;
+}
+
+
+#zipcode{
+  //margin-left: 10px !important;
+}
+#citydiv{
+  margin-right: 10px;
+}
+
+
+.form-group .radio{
+  display: inline-block;
+  margin-right: 10px;
+}
+
+#phoneCell{
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+#signup-form{
+  padding: 0;
+}
+
+.formtrue{
+  background-color: #2b669a !important;
+}
+
+.formBuyError{
+  border: 1px solid red !important;
+}
+
+.req{
+  color: #fd0101;
+}
+
+.cityzip{
+  width: 100%;
+}
+
+.cvs-label{
+  display: block;
+}
+#cvs{
+  display: inline-block;
+}
+.next-section{
+  padding: 0;
+  height: 45px;
+}
+
+.fa-question-circle{
+  font-size: 24px;
+  margin-left: 20px;
+  color: #3c3c3c;
+}

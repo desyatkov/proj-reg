@@ -1,0 +1,43 @@
+<div class="col-md-5 col-md-offset-3">
+    <div class="text-center">
+        <span class="glyphicon glyphicon-heart"></span>
+        <div>My WishList</div>
+    </div>
+    <div ng-show="isAuth">
+        <div class="row cart-side">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Album name</th>
+                        <th></th>
+                    </tr>
+
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in wishList track by $index">
+
+                        <td>
+                            <div ng-if="!item.category" class="wishtable">
+                                <a ui-sref="home.albumDetail({ albumID: item.album_id, albumCategory: item.subcategory })" >
+                                    <img ng-src="source/assets/img/{{ item.getAlbumImage }}" alt="">
+                                    &nbsp;{{item.album_name}}
+                                </a>
+                            </div>
+
+                            <div ng-if="item.category" class="wishtable">
+                                <a ui-sref="home.albumSubDetail({ albumID: item.album_id, albumCategory: item.category, subCategory:item.subcategory })" >
+                                    <img ng-src="source/assets/img/{{ item.getAlbumImage }}" alt="">
+                                    &nbsp;{{item.album_name}}
+                                </a>
+                            </div>
+                        </td>
+                        <td>
+                            <i class="fa fa-heart rem-wish-page" ng-click="removeFromWishList( item )"></i>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

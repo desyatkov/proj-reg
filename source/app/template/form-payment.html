@@ -1,0 +1,160 @@
+<!-- form-payment.html -->
+<label>What's Your payment method of Choice?</label>
+<div class="form-group">
+    <div class="radio">
+        <label>
+            <input type="radio" ng-model="submitData.type" value="cash">
+            Payment on delivery <i class="fa fa-money"></i>
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" ng-model="submitData.type" value="creditcard">
+            Credit card <i class="fa fa-credit-card"></i>
+        </label>
+    </div>
+</div>
+<div class="wrapper">
+
+    <div ng-show="submitData.type == 'cash'">
+        <div class="col-xs-12 next-section">
+            <button type="button" ui-sref="form.submitorder" class="btn btn-default loginsbm" ng-click="linkActive.submit=false">
+                Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span>
+            </button>
+        </div>
+    </div>
+
+
+    <!--credi card form----------------------------------------------------------------------->
+    <!---------------------------------------------------------------------------------------->
+    <div ng-show="submitData.type == 'creditcard'">
+
+        <div class="form-group" id="addr" ng-class="{ 'has-error': buyForm.address.$invalid }">
+            <label for="address">Card Holder <span class="req">*</span></label>
+            <input
+                    ng-class="{'formBuyError' : buyForm.address.$invalid && buyForm.address.$dirty };"
+                    ng-blur="notyf(buyForm.address.$error, 'Address')"
+                    id="address"
+                    type="text"
+                    name="address"
+                    ng-model="submitData.holderName"
+                    ng-minlength="3"
+                    ng-maxlength="30"
+                    class="form-control"
+                    required>
+
+            <div ng-messages="buyForm.address.$error" ng-show="buyForm.address.$dirty" class="my-messages">
+                <p ng-message="minlength" class="help-block">Your name is too short.</p>
+                <p ng-message="maxlength" class="help-block">Your name is too long.</p>
+                <p ng-message="required" class="help-block">Your name is required.</p>
+            </div>
+
+        </div>
+        <table class="cityzip">
+            <tr>
+                <td>
+                    <div class="form-group city" id="citydiv">
+                        <label for="credittype">Credit Card Type <span class="req">*</span></label>
+
+                        <select class="form-control customselect"
+                                id="credittype"
+                                ng-model="submitData.cardtype"
+                                required>
+                            <option value="" disabled selected>Select your Card type</option>
+
+                            <option value="visa">Visa</option>
+                            <option  value="master">Master Card</option>
+                            <option value="isra">Isracard</option>
+                            <option value="ae">American express</option>
+                        </select>
+                        <div noty-container></div>
+                    </div>
+
+                </td>
+                <td>
+                    <div class="form-group zipcode" id="zip">
+                        <label for="cardnum">Card Number <span class="req">*</span></label>
+                        <input ng-class="{ 'formBuyError' : buyForm.cardnum.$invalid && buyForm.cardnum.$dirty };"
+                               ng-blur="notyf(buyForm.cardnum.$error, 'Zip Code')"
+                               type="text"
+                               class="form-control"
+                               id="cardnum"
+                               name="cardnum"
+                               ng-model="submitData.cardnumber"
+                               mask="9999  9999  9999  9999"
+                               placeholder="XXXX  XXXX  XXXX  XXXX"
+                               clean="true"
+                               required>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <!--<div ng-messages="buyForm.cardnum.$error" ng-show="buyForm.cardnum.$dirty" class="my-messages">-->
+                        <!--<p ng-message="required" class="help-block">Your name is required.</p>-->
+                    <!--</div>-->
+                </td>
+                <td>
+                    <div ng-messages="buyForm.cardnum.$error" ng-show="buyForm.cardnum.$dirty" class="my-messages">
+                        <p ng-message="required" class="help-block">Your name is required.</p>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+
+
+
+        <div class="form-group" id="phoneCell">
+            <label for="exp">Exp Data <span class="req">*</span></label>
+            <input ng-class="{'formBuyError' : buyForm.exp.$invalid && buyForm.exp.$dirty };"
+                   ng-blur="notyf(buyForm.exp.$error, 'exp data')"
+                   type="exp"
+                   class="form-control"
+                   id="exp" name="exp"
+                   ng-model="submitData.exp"
+                   required
+                   placeholder="XX/XX"
+                   mask="12/99">
+
+            <div ng-messages="buyForm.exp.$error" ng-show="buyForm.exp.$dirty" class="my-messages">
+                <p ng-message="required" class="help-block">Your exp data is required.</p>
+            </div>
+        </div>
+
+        <div class="form-group" id="cvswrap">
+            <label for="cvs" class="cvs-label">CVS<span class="req"> *</span></label>
+            <input ng-class="{'formBuyError' : buyForm.cvv.$invalid && buyForm.cvv.$dirty };"
+                   ng-blur="notyf(buyForm.cvv.$error, 'cvv')"
+                   type="text"
+                   class="form-control"
+                   id="cvs" name="cvv"
+                   ng-model="submitData.cvv"
+                   required
+                   placeholder="XXX"
+                   mask="999">
+
+            <span data-toggle="tooltip"
+                  tooltip="3 digit number on back side your credit card "
+                  tooltip-placement="right">
+                <i class="fa fa-question-circle"></i>
+            </span>
+
+
+            <div ng-messages="buyForm.cvv.$error" ng-show="buyForm.cvv.$dirty" class="my-messages">
+                <p ng-message="required" class="help-block">Your cvs data is required.</p>
+            </div>
+        </div>
+
+
+
+        <div class="form-group row">
+            <div class="col-xs-12 next-section">
+                <button type="button" ui-sref="form.submitorder" class="btn btn-default loginsbm" ng-disabled="buyForm.$invalid" ng-click="saveFormDataSubmit()">
+                    Next Section <span class="glyphicon glyphicon-circle-arrow-right"></span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+</div>

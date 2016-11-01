@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MusicStore</title>
+    <!--<base href="/">-->
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="bower_components/Angular-Notys/angular-notys.css">
+    <link rel='stylesheet' href='style/css/loading-bar.css' type='text/css' media='all' />
+    <link rel="stylesheet" href="style/sass/music_store.css">
+    <link rel="stylesheet" href="style/sass/dropmenu.css">
+    <link rel="stylesheet" href="style/sass/bcrumb.css">
+    <link rel="stylesheet" href="style/sass/form.css">
+    <link rel='stylesheet' href='style/css/animate.css' type='text/css' media='all' />
+    <!-- font -->
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,300,700,900' rel='stylesheet' type='text/css'>    <!-- font -->
+</head>
+<body ng-app="musicstore" ng-controller="albumsController">
+<div class="top-menu">
+    <ul class="list-inline">
+        <li><a ui-sref="home.list">Home</a></li>
+        <li><a ui-sref="wishlist">My Wishlist</a></li>
+        <li><a ui-sref="cartDetails">CheckOut</a></li>
+        <li><a ui-sref="userdetails">My Account</a></li>
+        <li><a ui-sref="login" class="main-login-page" ng-class="{ 'hidden': isAuth }">Log in</a></li>
+
+    </ul>
+</div>
+<nav class="navbar navbar-inverse" >
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">MUSIC</A>
+        </DIV>
+        <div id="navbar" class="navbar-collapse collapse">
+            <div class="navbar-right" ng-controller="authController">
+                <p ng-cloak ng-show="!isAuth">Welcome <a ui-sref="login">Log In</a> online store!</p>
+                <p ng-cloak ng-show="!isAuth">or <a ui-sref="registration">Registration</a> for new users</p>
+
+                <p ng-cloak ng-show="isAuth">Hello, {{ dataUser[0]['user_firstname'] }} | <a href="" ng-click="logout()">logout</a></p>
+                <i class="fa fa-shopping-cart" ng-show="isAuth"> {{ cartListLenght }}  </i>
+            </div>
+            <form class="navbar-form navbar-right hidden-xs hidden-sm">
+                <div class="form-group findParent" ng-controller="findController as vm">
+                    <input type="text" placeholder="Search" class="form-control" ng-model='textFind' ng-keyup="findText(textFind)" ng-blur="blurField()">
+                    <div class="findText"  ng-show="showFind" ng-cloak >
+                            <div ng-repeat="album in findAlbum" class="findblock">
+                                <a ng-if="!album.category" ui-sref="home.albumDetail({ albumID: album.album_id, albumCategory:album.subcategory })">
+                                    <div class="findImg">
+
+                                    <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt=""></div>
+                                    <div class="namefindblock">
+                                        <div class="find artist" ng-bind-html="album.album_artist | highlight:textFind "></div>
+                                        <div class="find album"  ng-bind-html="album.album_name | highlight:textFind "></div>
+                                    </div>
+                                </a>
+
+                                <a ng-if="album.category" ui-sref="home.albumSubDetail({ albumID: album.album_id, albumCategory:album.category, subCategory:album.subcategory })">
+                                    <div class="findImg">
+
+                                        <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt=""></div>
+                                    <div class="namefindblock">
+                                        <div class="find artist" ng-bind-html="album.album_artist | highlight:textFind "></div>
+                                        <div class="find album"  ng-bind-html="album.album_name | highlight:textFind "></div>
+                                    </div>
+                                </a>
+                            </div>
+                            <div ng-show="!notf" ng-cloak>Not Found</div>
+                    </div>
+                    <button type="submit" class="search"><i class="fa fa-search"></i></button>
+                </div>
+            </form>
+
+        </div>
+        <!--/.navbar-collapse -->
+    </div>
+</nav>
+
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container top-img" ng-show="showHeader" ng-cloak>
+        <!-- Example row of columns -->
+        <div class="row">
+
+            <!-- header random big album -->
+            <div class="col-md-4 col-sm-4">
+                <a ng-if="!albums[0].category" ui-sref="home.albumDetail({ albumID: albums[0].album_id, albumCategory:albums[0].subcategory  })">
+                    <img ng-src="source/assets/img/{{ albums[0].getAlbumImage }}" alt="">
+                </a>
+                <a ng-if="albums[0].category" ui-sref="home.albumSubDetail({ albumID: albums[0].album_id, albumCategory: albums[0].category, subCategory:albums[0].subcategory  })">
+                    <img ng-src="source/assets/img/{{ albums[0].getAlbumImage }}" alt="">
+                </a>
+                <div class="ban_wrap ban_big">
+                    <h2>{{albums[0].album_name}}</h2>
+                    <p>{{albums[0].album_description}}</p>
+                </div>
+            </div>
+
+            <!-- header random albums -->
+            <div class="col-md-8 col-sm-8">
+                <div class="top-img-right-block" ng-repeat="album in randomAlbums" ng-cloak>
+                    <a ng-if="!album.category" ui-sref="home.albumDetail({ albumID: album.album_id, albumCategory:album.subcategory })">
+                        <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt="">
+                    </a>
+
+                    <a ng-if="album.category" ui-sref="home.albumSubDetail({ albumID: album.album_id, albumCategory:album.category, subCategory:album.subcategory })">
+                        <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt="">
+                    </a>
+
+                    <div class="ban_wrap">
+                        <a ui-sref="home.albumDetail({ albumID: album.album_id })">
+                            <h2>{{ album.album_name }}</h2>
+                        </a>
+                        <p>{{ album.album_description }}</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="container block_main_pics col-md-10 col-sm-10 col-md-offset-1">
+    <div ncy-breadcrumb class="col-md-10 col-sm-10 col-md-offset-1 bcrumb">  </div>
+    <!-- THIS IS INJECT CONTENT ============================== -->
+    <div ui-view ></div>
+</div>
+
+
+<div class="page-footer">
+    <p>&copy; Company 2015</p>
+</div>
+</div>
+<!-- /container -->
+
+
+<!--  core JavaScript
+================================================== -->
+<!--<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.min.js"></script>-->
+<script src="bower_components/jquery/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.19/angular.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular-cookies.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular-animate.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.js"></script>
+<script src="bower_components/Angular-Notys/angular-notys.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.3/ngStorage.js"></script>
+<script src="bower_components/ngFacebook/version/v0.0.7/ngFacebook.min.js"></script>
+<script src="bower_components/ngMask/dist/ngMask.js"></script>
+<script src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.10.0.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>
+<script src="bower_components/lodash/lodash.js"></script>
+<script src="bower_components/angular-breadcrumb/dist/angular-breadcrumb.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+<script src="bower_components/oauth.min.js"></script>
+<script src="bower_components/angular-oauth.io.min.js"></script>
+<script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+<script type='text/javascript' src='//cdnjs.cloudflare.com/ajax/libs/angular-loading-bar/0.7.1/loading-bar.min.js'></script>
+<script type='text/javascript' src='bower_components/ngInfiniteScroll/ng-infinite-scroll.min.js'></script>
+<script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/angular-ui-utils/0.1.1/angular-ui-utils.min.js'></script>
+
+
+<script src="source/app/app.js"></script>
+<script type='text/javascript' src='source/app/config/config.js'></script>
+
+<!--factories-->
+<script src="source/app/factories/get_headers_factory.js"></script>
+<script src="source/app/factories/get_genres_factory.js"></script>
+<script src="source/app/factories/authFactory.js"></script>
+<script src="source/app/factories/get_album_factory.js"></script>
+<script src="source/app/factories/cartFactory.js"></script>
+<script src="source/app/factories/registrationFactory.js"></script>
+<script src="source/app/factories/FbFactory.js"></script>
+<script src="source/app/factories/albumload.js"></script>
+<script src="source/app/factories/wishFactory.js"></script>
+
+<!--controllers-->
+<script src="source/app/controllers/sideMenuController.js"></script>
+<script src="source/app/controllers/albumByIdController.js"></script>
+<script src="source/app/controllers/authControllers.js"></script>
+<script src="source/app/controllers/cartController.js"></script>
+<script src="source/app/controllers/modalController.js"></script>
+<script src="source/app/controllers/findController.js"></script>
+<script src="source/app/controllers/userController.js"></script>
+
+<!--derectives-->
+<script src="source/app/derectives/body-main-derective.js"></script>
+<script src="source/app/derectives/findDerective.js"></script>
+<script src="source/app/config/dateFilter.js"></script>
+
+
+</body>
+</html>

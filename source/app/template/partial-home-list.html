@@ -1,0 +1,37 @@
+<div infinite-scroll='nextPage()' infinite-scroll-disabled='busy' infinite-scroll-distance='0'>
+
+    <div class="top-img-right-block body_pics" ng-repeat="album in lambda " ng-if="!album.category">
+        <a ui-sref="home.albumDetail({ albumID: album.album_id, albumCategory: album.subcategory })" >
+            <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt="">
+        </a>
+        <div class="ban_wrap ">
+            <a ui-sref="home.albumDetail({ albumID: album.album_id })">
+                <h2>{{album.album_name}}</h2>
+
+            </a>
+            <p class="list-price"><span>{{album.album_price | currency}}</span>
+                <span ng-show="ifInCard(album.album_id) && album.album_stock " class="shopcart_buy"><i class="fa fa-cart-arrow-down"></i></span></p>
+                <span ng-show="!ifInCard(album.album_id) && album.album_stock " class="shopcart_buy" ng-click="addToCard(album)"><i class="fa fa-cart-plus"></i></span></p>
+                <span ng-show=" !album.album_stock " class="shopcart_buy"><span class="glyphicon glyphicon-ban-circle"></span></span>
+            </p>
+        </div>
+    </div>
+
+    <div class="top-img-right-block body_pics" ng-repeat="album in lambda " ng-if="album.category">
+        <a ui-sref="home.albumSubDetail({ albumID: album.album_id, albumCategory: album.category, subCategory:album.subcategory })" >
+            <img ng-src="source/assets/img/{{ album.getAlbumImage }}" alt="">
+        </a>
+        <div class="ban_wrap ">
+            <a ui-sref="home.albumDetail({ albumID: album.album_id })">
+                <h2>{{album.album_name}}</h2>
+            </a>
+            <p class="list-price"><span>{{album.album_price | currency}}</span>
+                <span ng-show="ifInCard(album.album_id) && album.album_stock " class="shopcart_buy"><i class="fa fa-cart-arrow-down"></i></span></p>
+                <span ng-show="!ifInCard(album.album_id) && album.album_stock " class="shopcart_buy" ng-click="addToCard(album)"><i class="fa fa-cart-plus"></i></span></p>
+                <span ng-show=" !album.album_stock " class="shopcart_buy"><span class="glyphicon glyphicon-ban-circle"></span></span>
+        </div>
+    </div>
+
+
+    <div ng-show='load' class="col-md-7">Loading albums...</div>
+</div>

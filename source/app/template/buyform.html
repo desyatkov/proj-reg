@@ -1,0 +1,39 @@
+<!-- form.html -->
+<div class="row">
+    <div class="col-sm-7 col-md-7 col-md-offset-1">
+
+        <div id="form-container">
+
+            <div class="page-header text-center">
+                <!-- the links to our nested states using relative paths -->
+                <!-- add the active class if the state matches our ui-sref -->
+                <div id="status-buttons" class="text-center">
+                    <a ui-sref-active="active" ui-sref=".profile" disabled ng-class="{'disables': false};"><span ng-class="{'formtrue' : !linkActive.payment };">    1</span> Address</a>
+                    <a ui-sref-active="active" ui-sref=".payment" disabled ng-class="{'disables': linkActive.payment};"><span ng-class="{'formtrue' : !linkActive.submit };">    2</span> Payment</a>
+                    <a ui-sref-active="active" ui-sref=".submitorder" disabled ng-class="{'disables': linkActive.submit};"><span>3</span> Submit</a>
+                </div>
+            </div>
+
+            <!-- use ng-submit to catch the form submission and use our Angular function -->
+            <form  name="buyForm" novalidate>
+
+                <!-- our nested state views will be injected here -->
+                <div id="form-views" ui-view></div>
+            </form>
+
+        </div>
+
+        <!-- show our formData as it is being typed -->
+    <!--<pre>-->
+        <!--{{ submitData }}-->
+    <!--</pre>-->
+    </div>
+    <div class="col-md-3 col-sm-3 main-info">
+           <div class="contactinfo">Contact Info:</div>
+           <p><i class="fa fa-home"></i> {{ submitData.address }} </p>
+           <p><i class="fa fa-building"></i> {{ submitData.city }} </p>
+           <p><i class="fa fa-envelope-o"></i> {{ submitData.zipcode }} </p>
+           <p><i class="fa fa-phone"></i> {{ submitData.phone }} </p>
+           <p><i class="fa fa-money"></i> {{ submitData.type }} </p>
+    </div>
+</div>

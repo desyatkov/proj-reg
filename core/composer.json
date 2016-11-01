@@ -1,0 +1,14 @@
+{
+    "require": {
+        "slim/slim": "^2.6",
+        "vrana/notorm": "dev-master"
+    },
+    "autoload" : {
+        "classmap" : [
+            "model",
+            "controller"
+        ],
+        "files": [
+            "lib/dbclass.php"]
+    }
+}

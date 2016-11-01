@@ -1,0 +1,80 @@
+<div class="modal-header">
+    <h3>Registration<span class="pull-right close-modal" ng-click="cancel()"><i class="fa fa-times"></i></span></h3>
+</div>
+<div class="modal-body">
+
+
+
+    <!--formReg.email-->
+    <form name="userForm" ng-submit="submitForm()" novalidate>
+
+        <!-- NAME -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+            <label>Name</label>
+
+            <input type="text"
+                   name="name"
+                   class="form-control login"
+                   ng-model="user.name"
+                   ng-minlength="3"
+                   ng-maxlength="16"
+                   required>
+
+            <div ng-messages="userForm.name.$error" ng-show="userForm.name.$dirty" class="my-messages">
+                <p ng-message="minlength" class="my-messages">Your name is too short.</p>
+                <p ng-message="maxlength" class="my-messages">Your name is too long.</p>
+                <p ng-message="required" class="my-messages">Your name is required.</p>
+            </div>
+        </div>
+
+        <!-- LNAME -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.lname.$invalid && !userForm.lname.$pristine }">
+            <label>Last Name</label>
+            <input type="text"
+                   name="lname"
+                   class="form-control login"
+                   ng-model="user.lname"
+                   ng-minlength="3"
+                   ng-maxlength="16"
+                   required>
+
+            <div ng-messages="userForm.lname.$error" ng-show="userForm.lname.$dirty" class="my-messages">
+                <p ng-message="minlength" class="my-messages">Your name is too short.</p>
+                <p ng-message="maxlength" class="my-messages">Your name is too long.</p>
+                <p ng-message="required" class="my-messages">Your name is required.</p>
+            </div>
+        </div>
+
+        <!-- EMAIL -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+            <label>Email</label>
+            <input ng-change="isExist(user.email)"
+                   type="email"
+                   name="email"
+                   class="form-control login"
+                   ng-model="user.email"
+                   required>
+            <div ng-messages="userForm.lname.$error" ng-show="userForm.lname.$dirty" class="my-messages">
+                <p ng-message="required" class="my-messages">Your name is required.</p>
+            </div>
+
+            <p ng-cloak ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Enter a valid email.</p>
+            <p ng-show="isUserExist" class="help-block">Sorry, it looks like {{user.email}} belongs to an existing account</p>
+
+        </div>
+
+        <!-- pass -->
+        <div class="form-group" ng-class="{ 'has-error' : userForm.pass.$invalid && !userForm.pass.$pristine }">
+            <label for="pass">Password</label>
+            <input type="password"
+                   class="form-control login"
+                   id="pass"
+                   name="pass"
+                   ng-model="user.pass"
+                   required>
+            <p ng-show="userForm.pass.$invalid && !userForm.pass.$pristine" class="help-block">fill pass</p>
+        </div>
+
+        <button type="submit" class="btn btn-default loginsbm" ng-disabled="userForm.$invalid || isUserExist" ng-click="ok(user)">Registration</button>
+    </form>
+</div>

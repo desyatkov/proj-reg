@@ -1,0 +1,38 @@
+<div ng-class="{ 'spinner-load': loader }">
+    <div class="bounce1"></div>
+    <div class="bounce2"></div>
+    <div class="bounce3"></div>
+</div>
+<div class="col-md-6 col-md-offset-1" ng-class="{ 'hidden': loader }">
+    <div>
+        <div class="detailname">{{dataUser[0].user_firstname}} {{dataUser[0].user_lastname}} <span class="order-history"> | Orders history</span></div>
+    </div>
+
+    <div>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Order #</th>
+                    <th>Total Price</th>
+                    <th><i class="fa fa-calendar"></i> Date</th>
+                    <th>Albums</th>
+                </tr>
+            </thead>
+            <tbody class="">
+                <tr ng-repeat="items in history ">
+                    <td class="order-num">0000{{items.order_id}}</td>
+                    <td class="t-price">{{items.order_total | currency}}</td>
+                    <td>{{items.order_created | toYear}}</td>
+                    <td class="albums-in-table-cover">
+                        <p ng-repeat="item in items.order_albums" class="albums-in-table badge">
+                            {{item.album_name}} <i class="fa fa-times"></i> {{item.count}} qty.
+                        </p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+

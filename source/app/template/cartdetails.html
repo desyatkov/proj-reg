@@ -1,0 +1,37 @@
+<div class="col-md-10 col-md-offset-1">
+    <div>My cart {{cartList.length}}</div>
+    <div ng-show="isAuth">
+
+        <div class="row cart-side">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Album name</th>
+                        <th>Album price</th>
+                        <th>Count</th>
+                        <th>End Price</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in cartList track by $index">
+                        <td> {{item.album_name}} </td>
+                        <td> {{item.album_price | currency}} </td>
+                        <td> <i class="fa fa-times"></i> {{item.countInStock}}
+                            <span class="arrows">
+                            <i class="fa fa-angle-down" ng-click="lessCountCart(item)"></i>
+                                <!--<i class="fa fa-angle-up" ng-click="addCountCart(item.album_id)"></i>-->
+                            <i class="fa fa-angle-up" ng-click="addCountCart(item)"></i>
+                        </span>
+                        </td>
+                        <th>{{ item.album_price *  item.countInStock | currency}}</th>
+                        <td class="trashtable"> <a href="" ng-click="removeFromCart(item)" > <i class="fa fa-trash"></i></a> </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            Total Price: <span class="badge">{{ summedPrice | currency }}</span>
+            <a class="pull-right  btn-sm btn-success buy " ng-class="{ 'not-active': cartList.length == 0 }" ui-sref="form.profile">Continue to buy <i class="fa fa-credit-card"></i></a>
+        </div>
+    </div>
+</div>
